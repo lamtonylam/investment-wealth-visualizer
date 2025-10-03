@@ -1,0 +1,99 @@
+{
+  "columns": [
+    { "code": "Vuosi", "text": "Vuosi", "type": "t" },
+    { "code": "Sijoituslaji", "text": "Sijoituslaji", "type": "d" },
+    { "code": "Henkilön ikä", "text": "Henkilön ikä", "type": "d" },
+    {
+      "code": "p10",
+      "text": "10. prosenttipiste",
+      "comment": "Raja, jonka yläpuolelle jää 90 prosenttia varallisuuserää omistavista henkilöistä\r\n",
+      "type": "c"
+    },
+    {
+      "code": "p25",
+      "text": "25. prosenttipiste",
+      "comment": "Raja, jonka yläpuolelle jää 75 prosenttia varallisuuserää omistavista henkilöistä\r\n",
+      "type": "c"
+    },
+    {
+      "code": "p50",
+      "text": "50. prosenttipiste (mediaani)",
+      "comment": "Mediaani eli raja, jonka yläpuolelle jää 50 prosenttia varallisuuserää omistavista henkilöistä\r\n",
+      "type": "c"
+    },
+    {
+      "code": "p75",
+      "text": "75. prosenttipiste",
+      "comment": "Raja, jonka yläpuolelle jää 25 prosenttia varallisuuserää omistavista henkilöistä\r\n",
+      "type": "c"
+    },
+    {
+      "code": "p90",
+      "text": "90. prosenttipiste",
+      "comment": "Raja, jonka yläpuolelle jää 10 prosenttia varallisuuserää omistavista henkilöistä\r\n",
+      "type": "c"
+    },
+    {
+      "code": "p95",
+      "text": "95. prosenttipiste",
+      "comment": "Raja, jonka yläpuolelle jää 5 prosenttia varallisuuserää omistavista henkilöistä\r\n",
+      "type": "c"
+    },
+    {
+      "code": "p99",
+      "text": "99. prosenttipiste",
+      "comment": "Raja, jonka yläpuolelle jää 1 prosentti varallisuuserää omistavista henkilöistä\r\n",
+      "type": "c"
+    }
+  ],
+  "comments": [],
+  "data": [
+    {
+      "key": ["2024", "F5", "0-15"],
+      "values": ["281", "949", "2696", "6516", "13530", "20849", "48626"]
+    },
+    {
+      "key": ["2024", "F5", "16-24"],
+      "values": ["50", "444", "2692", "9311", "22504", "36796", "93905"]
+    },
+    {
+      "key": ["2024", "F5", "25-34"],
+      "values": ["63", "509", "3108", "11627", "31666", "54231", "145823"]
+    },
+    {
+      "key": ["2024", "F5", "35-44"],
+      "values": ["100", "711", "4359", "16625", "48934", "88061", "262646"]
+    },
+    {
+      "key": ["2024", "F5", "45-54"],
+      "values": ["147", "1031", "6168", "24854", "78804", "149756", "500082"]
+    },
+    {
+      "key": ["2024", "F5", "55-64"],
+      "values": ["222", "1760", "9317", "37242", "112901", "213720", "714588"]
+    },
+    {
+      "key": ["2024", "F5", "65-74"],
+      "values": ["479", "3416", "13957", "50093", "137200", "251759", "821718"]
+    },
+    {
+      "key": ["2024", "F5", "75-"],
+      "values": [
+        "1145",
+        "6128",
+        "20123",
+        "64250",
+        "169405",
+        "310340",
+        "1065729"
+      ]
+    }
+  ],
+  "metadata": [
+    {
+      "updated": "2025-09-17T05.00.00Z",
+      "label": "Henkilöiden pörssiosakkeet ja sijoitusrahastot muuttujina Vuosi, Sijoituslaji, Henkilön ikä ja Tiedot",
+      "source": "Tilastokeskus, kotitalouksien varallisuus"
+    }
+  ]
+}
