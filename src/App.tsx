@@ -22,10 +22,10 @@ function App() {
 
   return (
     <>
-      <h2>Sijoitusvarallisuus ikähaarukoittain visualisoituna</h2>
+      <h2>Sijoitusvarallisuus ikäluokittain visualisoituna</h2>
       <Select
-        label="Valitse ikähaarukka"
-        placeholder="Ikähaarukka"
+        label="Valitse ikäluokka"
+        placeholder="Ikäluokka"
         data={[
           '0-15',
           '16-24',
@@ -43,9 +43,27 @@ function App() {
       {selectedRow && (
         <>
           <div>
-            {`Valitulla ikähaarukalla (${age}) on keskimäärin ${p50} euroa sijoitusvarallisuutta.`}
+            {`Valitulla ikäluokalla (${age}) on keskimäärin ${p50} euroa sijoitusvarallisuutta.`}
           </div>
           <div>{`Sillä saisi ${bottlesText} pulloa jaloviinaa.`}</div>
+
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              gap: '8px',
+              marginTop: '10px',
+            }}
+          >
+            {Array.from({ length: Math.max(0, bottlesText) }).map((_, i) => (
+              <img
+                key={i}
+                src="./jaloviina-muovipullo.jpg"
+                alt="Jaloviina muovipullo"
+                style={{ width: '50px', height: 'auto' }}
+              />
+            ))}
+          </div>
         </>
       )}
     </>
