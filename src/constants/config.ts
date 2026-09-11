@@ -13,4 +13,4 @@ export const AGE_GROUPS: AgeGroup[] = [
   '75-',
 ];
 
-export const BOTTLE_IMAGE_SRC = './jaloviina-muovipullo.jpg';
+export const BOTTLE_IMAGE_SRC = '/jaloviina-muovipullo.jpg';

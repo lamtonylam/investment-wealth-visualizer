@@ -1,14 +1,9 @@
-import parseDataset from './jsonParser';
+import { parseDataset } from './jsonParser';
 import type { RawDataset } from './jsonParser';
+import rawData from '../data/2024.json';
 
-async function getData() {
-  const dataModule = await import('../data/2024.json', {
-    assert: { type: 'json' },
-  });
-  const dataset = dataModule.default as RawDataset;
-  const parsed = parseDataset(dataset);
-
-  return parsed;
+function getData() {
+  return parseDataset(rawData as unknown as RawDataset);
 }
 
 export { getData };

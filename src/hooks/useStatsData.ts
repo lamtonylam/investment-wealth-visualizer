@@ -14,26 +14,14 @@ export function useStatsData(): UseStatsDataResult {
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
-    let isMounted = true;
-    setIsLoading(true);
-
-    getData()
-      .then(fetchedData => {
-        if (isMounted) {
-          setData(fetchedData);
-          setIsLoading(false);
-        }
-      })
-      .catch(err => {
-        if (isMounted) {
-          setError(err instanceof Error ? err : new Error(String(err)));
-          setIsLoading(false);
-        }
-      });
-
-    return () => {
-      isMounted = false;
-    };
+    try {
+      const fetchedData = getData();
+      setData(fetchedData);
+    } catch (err) {
+      setError(err instanceof Error ? err : new Error(String(err)));
+    } finally {
+      setIsLoading(false);
+    }
   }, []);
 
   return { data, isLoading, error };

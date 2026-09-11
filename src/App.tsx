@@ -1,33 +1,49 @@
-import './App.css';
+'use client';
+
 import { useState } from 'react';
-import { Container } from '@mantine/core';
+import { Alert, Container, Skeleton } from '@mantine/core';
 import { Header } from './components/Header';
 import { AgeSelector } from './components/AgeSelector';
 import { WealthSummary } from './components/WealthSummary';
 import { BottleVisualizer } from './components/BottleVisualizer';
 import { useStatsData } from './hooks/useStatsData';
+import { useJaloviinaPrice } from './hooks/useJaloviinaPrice';
 import { calculateBottleCount } from './utils/calculations';
-import { DEFAULT_JALOVIINA_PRICE } from './constants/config';
+import type { AgeGroup } from './types';
 
 function App() {
-  const { data, isLoading } = useStatsData();
-  const [selectedAge, setSelectedAge] = useState<string | null>(null);
+  const { data, isLoading, error: statsError } = useStatsData();
+  const { price: jaloviinaPrice, error: priceError } = useJaloviinaPrice();
+  const [selectedAge, setSelectedAge] = useState<AgeGroup | null>(null);
+
+  const error = statsError ?? priceError;
 
   const selectedRow = data?.find(row => row.ika === selectedAge) ?? null;
   const medianWealth = selectedRow?.percentiles?.p50 ?? null;
   const bottleCount = calculateBottleCount(
     medianWealth,
-    DEFAULT_JALOVIINA_PRICE
+    jaloviinaPrice
   );
 
   return (
     <Container size="md" py="xl">
       <Header />
-      <AgeSelector
-        value={selectedAge}
-        onChange={setSelectedAge}
-        disabled={isLoading}
-      />
+
+      {error && (
+        <Alert variant="light" color="red" title="Virhe" mt="md">
+          {error.message}
+        </Alert>
+      )}
+
+      {isLoading ? (
+        <Skeleton height={36} radius="sm" mt="md" />
+      ) : (
+        <AgeSelector
+          value={selectedAge}
+          onChange={(val) => setSelectedAge(val as AgeGroup | null)}
+          disabled={isLoading}
+        />
+      )}
 
       {selectedRow && (
         <>
@@ -35,6 +51,7 @@ function App() {
             age={selectedAge ?? ''}
             medianWealth={medianWealth}
             bottleCount={bottleCount}
+            bottlePrice={jaloviinaPrice}
           />
           <BottleVisualizer count={bottleCount} />
         </>

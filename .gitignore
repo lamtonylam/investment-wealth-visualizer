@@ -25,3 +25,6 @@ dist-ssr
 src/utils/alkoData.ts
 
 .kilo
+
+.env
+.next

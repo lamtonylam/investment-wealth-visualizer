@@ -25,6 +25,7 @@ export function BottleVisualizer({
       }}
     >
       {Array.from({ length: count }).map((_, i) => (
+        /* eslint-disable-next-line @next/next/no-img-element */
         <img
           key={i}
           src={imageSrc}
