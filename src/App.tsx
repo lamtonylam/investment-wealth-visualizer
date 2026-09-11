@@ -1,7 +1,7 @@
 import './App.css';
 import { useState, useEffect } from 'react';
 import { getData } from './utils/getStatsData';
-import { Select } from '@mantine/core';
+import { Container, Select } from '@mantine/core';
 import { type ParsedRow } from './utils/jsonParser';
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
   const bottlesText = Math.floor(p50 != null ? p50 / jaloviinaPrice : 0);
 
   return (
-    <>
+    <Container size="md" py="xl">
       <h2>Sijoitusvarallisuus ikäluokittain visualisoituna</h2>
       <Select
         label="Valitse ikäluokka"
@@ -42,10 +42,14 @@ function App() {
 
       {selectedRow && (
         <>
-          <div>
-            {`Valitulla ikäluokalla (${age}) on keskimäärin ${p50} euroa sijoitusvarallisuutta.`}
+          <div style={{ marginTop: '16px' }}>
+            Valitulla ikäluokalla ({age}) on keskimäärin{' '}
+            <b>{p50 != null ? `${p50.toLocaleString('fi-FI')} euroa` : '0 euroa'}</b>{' '}
+            sijoitusvarallisuutta.
           </div>
-          <div>{`Sillä saisi ${bottlesText} pulloa jaloviinaa.`}</div>
+          <div>
+            Sillä saisi <b>{bottlesText.toLocaleString('fi-FI')}</b> pulloa jaloviinaa.
+          </div>
 
           <div
             style={{
@@ -66,7 +70,7 @@ function App() {
           </div>
         </>
       )}
-    </>
+    </Container>
   );
 }
 
