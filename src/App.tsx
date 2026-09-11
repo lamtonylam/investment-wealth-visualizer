@@ -1,73 +1,42 @@
 import './App.css';
-import { useState, useEffect } from 'react';
-import { getData } from './utils/getStatsData';
-import { Container, Select } from '@mantine/core';
-import { type ParsedRow } from './utils/jsonParser';
+import { useState } from 'react';
+import { Container } from '@mantine/core';
+import { Header } from './components/Header';
+import { AgeSelector } from './components/AgeSelector';
+import { WealthSummary } from './components/WealthSummary';
+import { BottleVisualizer } from './components/BottleVisualizer';
+import { useStatsData } from './hooks/useStatsData';
+import { calculateBottleCount } from './utils/calculations';
+import { DEFAULT_JALOVIINA_PRICE } from './constants/config';
 
 function App() {
-  const [data, setData] = useState<ParsedRow[] | null>(null);
-  const [age, setAge] = useState<string | null>(null);
+  const { data, isLoading } = useStatsData();
+  const [selectedAge, setSelectedAge] = useState<string | null>(null);
 
-  const jaloviinaPrice = 20.6;
-
-  useEffect(() => {
-    getData().then(fetchedData => {
-      setData(fetchedData);
-    });
-  }, []);
-
-  const selectedRow = data?.find(row => row.ika === age) ?? null;
-  const p50 = selectedRow?.percentiles?.p50 ?? null;
-  const bottlesText = Math.floor(p50 != null ? p50 / jaloviinaPrice : 0);
+  const selectedRow = data?.find(row => row.ika === selectedAge) ?? null;
+  const medianWealth = selectedRow?.percentiles?.p50 ?? null;
+  const bottleCount = calculateBottleCount(
+    medianWealth,
+    DEFAULT_JALOVIINA_PRICE
+  );
 
   return (
     <Container size="md" py="xl">
-      <h2>Sijoitusvarallisuus ikäluokittain visualisoituna</h2>
-      <Select
-        label="Valitse ikäluokka"
-        placeholder="Ikäluokka"
-        data={[
-          '0-15',
-          '16-24',
-          '25-34',
-          '35-44',
-          '45-54',
-          '55-64',
-          '65-74',
-          '75-',
-        ]}
-        value={age}
-        onChange={setAge}
+      <Header />
+      <AgeSelector
+        value={selectedAge}
+        onChange={setSelectedAge}
+        disabled={isLoading}
       />
 
       {selectedRow && (
         <>
-          <div style={{ marginTop: '16px' }}>
-            Valitulla ikäluokalla ({age}) on keskimäärin{' '}
-            <b>{p50 != null ? `${p50.toLocaleString('fi-FI')} euroa` : '0 euroa'}</b>{' '}
-            sijoitusvarallisuutta.
-          </div>
-          <div>
-            Sillä saisi <b>{bottlesText.toLocaleString('fi-FI')}</b> pulloa jaloviinaa.
-          </div>
-
-          <div
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '8px',
-              marginTop: '10px',
-            }}
-          >
-            {Array.from({ length: Math.max(0, bottlesText) }).map((_, i) => (
-              <img
-                key={i}
-                src="./jaloviina-muovipullo.jpg"
-                alt="Jaloviina muovipullo"
-                style={{ width: '50px', height: 'auto' }}
-              />
-            ))}
-          </div>
+          <WealthSummary
+            age={selectedAge ?? ''}
+            medianWealth={medianWealth}
+            bottleCount={bottleCount}
+          />
+          <BottleVisualizer count={bottleCount} />
         </>
       )}
     </Container>
